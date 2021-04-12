@@ -15,7 +15,7 @@ const app = express()
 app.use(express.static('public'));
 //mongodb connection for readers
 //It is public
-mongoose.connect('mongodb+srv://reader:readthedb123@infotelek.joqj2.mongodb.net/tetelekdb?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.mongoconnection, {useNewUrlParser: true, useUnifiedTopology: true})
 
 //View engine: ejs
 app.set('view engine', 'ejs')
