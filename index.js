@@ -2,18 +2,35 @@ const express = require('express')
 const mongoose = require('mongoose')
 const Item = require('./models/Item')
 const app = express()
-app.use(express.urlencoded({
+
+//use express.urlencoded to access the post data from the form
+//It is not avaliable for users yet
+
+/* app.use(express.urlencoded({
     extended: true
-  }))
+  })) */
+
+
+//specify the static folder
 app.use(express.static('public'));
+//mongodb connection for readers
+//It is public
 mongoose.connect('mongodb+srv://reader:readthedb123@infotelek.joqj2.mongodb.net/tetelekdb?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true})
+
+//View engine: ejs
 app.set('view engine', 'ejs')
+
+//Root page redirect
 app.get('/', (req,res) => {
     res.redirect('/tetelek')
 })
-app.get('/newitem', (req,res) => {
+//Adding new item not avaliable yet
+
+/*app.get('/newitem', (req,res) => {
     res.render('newitem')
-})
+})*/
+
+//Get all documents form the database, pass the data to the view engine
 app.get('/tetelek', async (req,res) => {
     try{
         const data = await Item.find({}).exec()
@@ -23,6 +40,8 @@ app.get('/tetelek', async (req,res) => {
     }
   
 })
+
+//Get only one document
 app.get('/tetel/:id', async (req,res) => {
     try{
         const tetel = await Item.findOne({id: req.params.id}).exec()
@@ -31,7 +50,9 @@ app.get('/tetel/:id', async (req,res) => {
         res.status(500).send({message: "Database error"})
     }
 })
-app.post('/submit-form', async (req,res) => {
+
+//Path for uploading data, not avaliable 
+/*app.post('/submit-form', async (req,res) => {
     const submitObject = new Item({
         id: req.body.id,
         task: req.body.task,
@@ -43,5 +64,6 @@ app.post('/submit-form', async (req,res) => {
     } catch (err) {
         res.status(500).send({message: "Can't connent to db"})
     }
-})
-app.listen(5000)
+})*/
+//Listen on port specified in env, or 5000
+app.listen(process.env.PORT || 5000)
