@@ -14,7 +14,6 @@ const app = express()
 //specify the static folder
 app.use(express.static('public'));
 //mongodb connection for readers
-//It is public
 mongoose.connect(process.env.mongoconnection, {useNewUrlParser: true, useUnifiedTopology: true})
 
 //View engine: ejs
